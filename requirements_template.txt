@@ -1,0 +1,17 @@
+# Core dependencies
+streamlit==1.45.1
+streamlit-drawable-canvas==0.9.3
+
+# ML/AI libraries
+torch==2.7.1
+transformers==4.46.0
+pillow==11.2.1
+
+# Image processing
+opencv-python-headless==4.11.0.86
+numpy==2.3.0
+
+# Data handling
+pandas==2.3.0
+
+# cannot be built with python3.14 (no compiled wheel for numpy 2.3.0) so it uses python3.12 now
