@@ -106,7 +106,7 @@ def render_canvas_subtab(processor, model):
                 }
 
     # Отображение результатов
-    if "canvas_result" in st.session_state:
+    if "canvas_result" in st.session_state and st.session_state.canvas_result is not None:
         display_recognition_results(
             st.session_state.canvas_result["latex"],
             st.session_state.canvas_result["image"],
@@ -175,7 +175,7 @@ def render_upload_subtab(processor, model):
                     }
 
         # Отображение результатов
-        if "upload_result" in st.session_state:
+        if "upload_result" in st.session_state and st.session_state.upload_result is not None:
             display_recognition_results(
                 st.session_state.upload_result["latex"],
                 st.session_state.upload_result["image"],
