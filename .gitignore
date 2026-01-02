@@ -1,5 +1,6 @@
 # User ignores
 local-docs/
+.streamlit/secrets.toml
 
 # transformer is too heavy to upload it directly on github
 models/
