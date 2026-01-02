@@ -6,6 +6,7 @@ import numpy as np
 from src.model_loader import load_model_and_processor, get_model_info
 from src.preprocessing import preprocess_image
 from src.inference import predict_latex_unified
+#from src.inference import predict_latex
 from src.metrics import compute_metrics
 from src.export import create_download_button_data
 
@@ -180,7 +181,7 @@ def render_upload_subtab(processor, model):
                     )
 
                     # Инференс
-                    latex = predict_latex(processed_image, processor, model)
+                    latex = predict_latex_unified(processed_image, processor, model)
 
                     # Сохранение в session state
                     st.session_state.upload_result = {
