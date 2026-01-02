@@ -1,6 +1,7 @@
 import streamlit as st
 from src.ui.sidebar import render_sidebar
 from src.ui.tab_recognition import render_recognition_tab
+from src.download_model import download_model_from_gdrive
 
 
 
@@ -14,7 +15,6 @@ except ImportError:
     HAS_ADDITIONAL_TABS = False
 
 
-
 # Page config
 st.set_page_config(
     page_title="Распознавание рукописных математических выражений",
@@ -22,6 +22,10 @@ st.set_page_config(
     layout="wide",
     initial_sidebar_state="expanded"
 )
+
+
+# Загрузка модели с GD (если она не обнаружена локально)
+download_model_from_gdrive()
 
 # Initialize session state
 if "canvas_result" not in st.session_state:
