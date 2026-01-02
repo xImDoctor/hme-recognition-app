@@ -1,0 +1,15 @@
+{
+  "trocr1-5ep": {
+    "path": "models/trocr1-5ep",
+    "name": "TrOCR-Base-HME (1-5ep)",
+    "description": "Модель microsoft/trocr-base-handwritten, дообученная на HME100K (5 эпох)",
+    "metrics": {
+      "exp_rate_2": 73.98,
+      "cer": 16.88,
+      "avg_edit_distance": 4.57
+    },
+    "base_model": "microsoft/trocr-base-handwritten",
+    "dataset": "HME100K",
+    "epochs": 5
+  }
+}
