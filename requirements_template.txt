@@ -14,4 +14,7 @@ numpy==2.3.0
 # Data handling
 pandas==2.3.0
 
+# Model loading
+gdown==5.1.0
+
 # cannot be built with python3.14 (no compiled wheel for numpy 2.3.0) so it uses python3.12 now
