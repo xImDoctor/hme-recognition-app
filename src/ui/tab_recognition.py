@@ -29,7 +29,7 @@ def render_recognition_tab(selected_model_key: str):
     processor, model = load_model_and_processor(model_info["path"])
 
     # Создание подтабов
-    subtab1, subtab2 = st.tabs(["Canvas (рисование)", "Загрузка изображения"])
+    subtab1, subtab2 = st.tabs(["Рисование формулы", "Загрузка изображения"])
 
     with subtab1:
         render_canvas_subtab(processor, model)
@@ -44,6 +44,10 @@ def render_canvas_subtab(processor, model):
     Рендерит подтаб с Canvas для рисования.
     """
     st.subheader("Нарисуйте математическое выражение")
+
+    # Инициализация session state для ground truth
+    if "canvas_gt" not in st.session_state:
+        st.session_state.canvas_gt = ""
 
     # Настройки предобработки
     with st.expander("Настройки предобработки"):
@@ -69,7 +73,7 @@ def render_canvas_subtab(processor, model):
         stroke_color="black",
         background_color="white",
         height=200,
-        width=700,
+        width=800,
         drawing_mode="freedraw",
         key="canvas_main",
     )
@@ -81,6 +85,9 @@ def render_canvas_subtab(processor, model):
 
     # Обработка результата
     if recognize_btn:
+        # Автоочистка поля ground truth при новом распознавании
+        st.session_state.canvas_gt = ""
+
         if canvas_result.image_data is None or np.sum(canvas_result.image_data) == 0:
             st.warning("Canvas пустой. Нарисуйте формулу перед распознаванием.")
         else:
@@ -120,6 +127,10 @@ def render_upload_subtab(processor, model):
     """
     st.subheader("Загрузите изображение математического выражения")
 
+    # Инициализация session state для ground truth
+    if "upload_gt" not in st.session_state:
+        st.session_state.upload_gt = ""
+
     # Настройки предобработки
     with st.expander("Настройки предобработки"):
         col1, col2 = st.columns(2)
@@ -157,6 +168,9 @@ def render_upload_subtab(processor, model):
             recognize_btn = st.button("Распознать", type="primary", key="upload_recognize")
 
             if recognize_btn:
+                # Автоочистка поля ground truth при новом распознавании
+                st.session_state.upload_gt = ""
+
                 with st.spinner("Распознавание..."):
                     # Предобработка
                     processed_image = preprocess_image(
@@ -220,12 +234,33 @@ def display_recognition_results(latex: str, image: Image.Image, key_prefix: str)
 
     # Метрики (опционально)
     st.markdown("---")
-    st.markdown("### Оценка качества (опционально)")
-    ground_truth = st.text_input(
-        "Введите правильный LaTeX (ground truth) для вычисления метрик:",
-        key=f"{key_prefix}_gt"
-    )
+    st.markdown("### Оценка качества")
 
+    # Проверка флага очистки ДО создания виджета
+    clear_flag_key = f"{key_prefix}_gt_should_clear"
+    if clear_flag_key in st.session_state and st.session_state[clear_flag_key]:
+        st.session_state[f"{key_prefix}_gt"] = ""
+        st.session_state[clear_flag_key] = False
+
+    # Поле ввода ground truth с кнопками подтверждения и очистки
+    col_input, col_buttons = st.columns([7, 2])
+    with col_input:
+        ground_truth = st.text_input(
+            "Введите правильный LaTeX (ground truth) для вычисления метрик:",
+            key=f"{key_prefix}_gt"
+        )
+    with col_buttons:
+        st.markdown("<br>", unsafe_allow_html=True)  # вертикальное выравнивание
+        btn_col1, btn_col2 = st.columns(2, gap="small")
+        with btn_col1:
+            compute_btn = st.button("Вычислить", key=f"{key_prefix}_gt_compute", type="primary", use_container_width=True)
+        with btn_col2:
+            if st.button("Очистить", key=f"{key_prefix}_gt_clear", use_container_width=True):
+                st.session_state[clear_flag_key] = True
+                st.rerun()
+
+
+    # Отображение метрик при наличии ground truth (после Enter или кнопки Вычислить)
     if ground_truth:
         metrics = compute_metrics(latex, ground_truth)
 
