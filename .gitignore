@@ -1,6 +1,9 @@
 # User ignores
 local-docs/
 
+# transformer is too heavy to upload it directly on github
+models/
+
 
 # Byte-compiled / optimized / DLL files
 __pycache__/
