@@ -37,6 +37,24 @@ if selected_model is None:
     st.error("Не удалось загрузить модель. Проверьте конфигурацию.")
     st.stop()
 
+
+# CSS для табов
+st.markdown("""
+    <style>
+    /* Увеличение размера табов */
+    .stTabs [data-baseweb="tab-list"] button {
+        font-size: 2rem;
+        padding: 0.75rem 1.5rem;
+        font-weight: 500;
+    }
+    .stTabs [data-baseweb="tab-list"] {
+        gap: 0.5rem;
+    }
+
+    </style>
+""", unsafe_allow_html=True)
+
+
 # Main tabs
 if HAS_ADDITIONAL_TABS:
 #   tab1, tab2, tab3

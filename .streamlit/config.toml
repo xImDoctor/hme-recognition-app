@@ -1,8 +1,8 @@
 [theme]
-primaryColor = "#FF6B6B"
-backgroundColor = "#FFFFFF"
-secondaryBackgroundColor = "#F0F2F6"
-textColor = "#262730"
+primaryColor = "#7C3AED"        # Более глубокий и насыщенный фиолетовый
+backgroundColor = "#FFFFFF"      # Белый фон
+secondaryBackgroundColor = "#EDE9FE"  # Более заметный фиолетовый оттенок
+textColor = "#18181B"           # Почти черный для максимального контраста
 font = "sans serif"
 
 [server]
