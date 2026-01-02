@@ -1,2 +1,13 @@
 # Handwritten Mathematical Expression Recognition App (HMER-App)
-An application within the coursework that recognizes mathematical expressions written by hand and outputs them in LaTeX format using Transformer Ocr model tuned on `HME100K` dataset.
+
+Веб-приложение для распознавания рукописных математических выражений с использованием модели **TrOCR** (Transformer-based Optical Character Recognition), дообученной на датасете **HME100K**. Разработано в рамках курсовой работы.
+
+## Возможности
+
+- **Canvas для рисования** — рисуйте математические формулы прямо в браузере
+- **Загрузка изображений** — распознавайте формулы из файлов изображений `PNG`/`JPEG`
+- **3 формата вывода** — LaTeX код, рендеринг формулы, экспорт в `.txt`
+- **Метрики качества** — вычисление CER и Edit Distance при вводе ground truth
+- **Опциональная предобработка** — автоинверсия и бинаризация изображений (включатся на вкладке загрузки/рисования)
+- **Метрики обучения** — визуализация результатов обучения модели (графики, таблицы)
+

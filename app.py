@@ -8,7 +8,7 @@ from src.ui.tab_recognition import render_recognition_tab
 # отлавливаем исключение при ошибке импорта
 try:
     from src.ui.tab_about import render_about_tab
-    from src.ui.tab_metrics import render_metrics_tab
+    #from src.ui.tab_metrics import render_metrics_tab
     HAS_ADDITIONAL_TABS = True
 except ImportError:
     HAS_ADDITIONAL_TABS = False
@@ -39,17 +39,18 @@ if selected_model is None:
 
 # Main tabs
 if HAS_ADDITIONAL_TABS:
-    tab1, tab2, tab3 = st.tabs([
+#   tab1, tab2, tab3
+    tab1, tab3 = st.tabs([
         "Распознавание",
-        "Метрики обучения",
+        #"Метрики обучения",
         "О приложении"
     ])
 
     with tab1:
         render_recognition_tab(selected_model)
 
-    with tab2:
-        render_metrics_tab()
+   # with tab2:
+   #     render_metrics_tab()
 
     with tab3:
         render_about_tab()
