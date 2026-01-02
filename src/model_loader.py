@@ -4,17 +4,36 @@ import json
 from pathlib import Path
 
 
+def check_use_hf_api() -> bool:
+    """
+    Проверяет, нужно ли использовать HuggingFace Inference API.
+
+    Returns:
+        bool: True если используем HF API, False если локальную модель
+    """
+    try:
+        return "huggingface" in st.secrets and "model_name" in st.secrets["huggingface"]
+    except:
+        return False
+
+
 @st.cache_resource
 def load_model_and_processor(model_path: str):
     """
     Загружает модель TrOCR и процессор с кешированием.
+    Возвращает (None, None) если используется HuggingFace API.
 
     Args:
         model_path: Путь к папке с моделью
 
     Returns:
-        tuple: (processor, model)
+        tuple: (processor, model) или (None, None) при использовании HF API
     """
+    # Проверяем, используется ли HF API
+    if check_use_hf_api():
+        # HF API режим - модель не нужна
+        return None, None
+
     try:
         processor = TrOCRProcessor.from_pretrained(model_path)
         model = VisionEncoderDecoderModel.from_pretrained(model_path)

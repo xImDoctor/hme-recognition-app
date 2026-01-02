@@ -10,8 +10,18 @@ from pathlib import Path
 def download_model_from_gdrive():
     """
     Загружает модель с Google Drive, если её нет локально.
+    Пропускает загрузку, если используется HuggingFace Inference API.
     Использует st.secrets для получения ссылки на модель.
     """
+    # Проверяем, используется ли HuggingFace API
+    try:
+        use_hf_api = "huggingface" in st.secrets and "model_name" in st.secrets["huggingface"]
+        if use_hf_api:
+            # Используем HF API - локальная модель не нужна
+            return
+    except:
+        pass
+
     model_path = Path("models/trocr1-5ep")
 
     # Существует ли модель локально
